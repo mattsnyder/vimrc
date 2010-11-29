@@ -1,11 +1,11 @@
 # FILE:     autoload/conque_term/conque_sole.py {{{
 # AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
 # WEBSITE:  http://conque.googlecode.com
-# MODIFIED: __MODIFIED__
-# VERSION:  __VERSION__, for Vim 7.0
+# MODIFIED: 2010-11-15
+# VERSION:  2.0, for Vim 7.0
 # LICENSE:
 # Conque - Vim terminal/console emulator
-# Copyright (C) 2009-__YEAR__ Nico Raffo
+# Copyright (C) 2009-2010 Nico Raffo
 #
 # MIT License
 #
@@ -136,7 +136,7 @@ class ConqueSole(Conque):
                 return output
 
         except:
-            logging.info(traceback.format_exc())
+
             pass
         # }}}
 
@@ -148,16 +148,16 @@ class ConqueSole(Conque):
         if not (stats['cursor_y'] + 1 > self.l or (stats['cursor_y'] + 1 == self.l and stats['cursor_x'] + 1 > self.c)):
             return ""
 
-        logging.debug('read lines: ' + str(lines))
-        logging.debug('from line: ' + str(update_top))
-        logging.debug('current cursor: line ' + str(self.l) + ' col ' + str(self.c))
-        logging.debug('new cursor: ' + str(stats))
+
+
+
+
 
         try:
             num_to_return = stats['cursor_y'] - self.l + 2
-            logging.debug('need to return ' + str(num_to_return) + ' lines')
+
             lines = lines[self.l - update_top - 1:]
-            logging.debug('relevant lines are ' + str(lines))
+
 
             new_output = []
 
@@ -169,10 +169,10 @@ class ConqueSole(Conque):
                 new_output.append(lines[i].rstrip())
 
         except:
-            logging.info(traceback.format_exc())
+
             pass
 
-        logging.info('return output is ' + str(new_output))
+
 
         return "\n".join(new_output)
         # }}}
@@ -182,9 +182,9 @@ class ConqueSole(Conque):
 
     def plain_text(self, line_nr, text, attributes, stats): # {{{
 
-        #logging.debug('line ' + str(line_nr) + ": " + text)
-        #logging.debug('attributes ' + str(line_nr) + ": " + attributes)
-        #logging.debug('default attr ' + str(stats['default_attribute']))
+
+
+
 
         self.l = line_nr + 1
 
@@ -193,9 +193,9 @@ class ConqueSole(Conque):
 
         # if we're using concealed text for color, then s- is weird
         if self.color_mode == 'conceal':
-            #logging.debug('adding color to ' + str(text))
+
             text = self.add_conceal_color(text, attributes, stats, line_nr)
-            #logging.debug('added color to ' + str(text))
+
 
         # update vim buffer
         if len(self.buffer) <= line_nr:
@@ -230,7 +230,7 @@ class ConqueSole(Conque):
         ends = []
         for i in range(0, len(attributes)):
             c = ord(attributes[i])
-            #logging.debug('attr char ' + str(c))
+
             if c != attr:
                 if attr and attr != stats['default_attribute']:
 
@@ -299,7 +299,7 @@ class ConqueSole(Conque):
         start = 0
         for i in range(0, len(attributes)):
             c = ord(attributes[i])
-            #logging.debug('attr char ' + str(c))
+
             if c != attr:
                 if attr and attr != stats['default_attribute']:
                     self.color_changes = self.translate_color(attr)
@@ -322,10 +322,10 @@ class ConqueSole(Conque):
         if attr in self.color_cache:
             return self.color_cache[attr]
 
-        #logging.debug('adding color at line ' + str(line_nr))
-        #logging.debug('start ' + str(start))
-        #logging.debug('start ' + str(end))
-        #logging.debug('attr ' + str(attr))
+
+
+
+
 
         # convert attribute integer to bit string
         bit_str = bin(attr)

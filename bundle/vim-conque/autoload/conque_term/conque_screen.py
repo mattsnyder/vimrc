@@ -1,11 +1,11 @@
 # FILE:     autoload/conque_term/conque_screen.py {{{
 # AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
 # WEBSITE:  http://conque.googlecode.com
-# MODIFIED: __MODIFIED__
-# VERSION:  __VERSION__, for Vim 7.0
+# MODIFIED: 2010-11-15
+# VERSION:  2.0, for Vim 7.0
 # LICENSE:
 # Conque - Vim terminal/console emulator
-# Copyright (C) 2009-__YEAR__ Nico Raffo
+# Copyright (C) 2009-2010 Nico Raffo
 #
 # MIT License
 #
@@ -112,7 +112,7 @@ class ConqueScreen(object):
             self.buffer[len(self.buffer) - 1] = value
         else:
             self.buffer.append(value)
-        logging.debug('checking new line ' + str(len(self.buffer)) + ' against top ' + str(self.screen_top) + ' + height ' + str(self.screen_height) + ' - 1 = ' + str(self.screen_top + self.screen_height - 1))
+
         if len(self.buffer) > self.screen_top + self.screen_height - 1:
             self.screen_top += 1
         if vim.current.buffer.number == self.buffer.number:
@@ -120,7 +120,7 @@ class ConqueScreen(object):
     # }}}
 
     def insert(self, line, value): # {{{
-        logging.debug('insert at line ' + str(self.screen_top + line - 2))
+
         l = self.screen_top + line - 2
         self.buffer.append(value, l)
 
@@ -175,9 +175,9 @@ class ConqueScreen(object):
     # }}}
 
     def reset_size(self, line): # {{{
-        logging.debug('buffer len is ' + str(len(self.buffer)))
-        logging.debug('buffer height ' + str(vim.current.window.height))
-        logging.debug('old screen top was ' + str(self.screen_top))
+
+
+
 
         # save cursor line number
         real_line = self.screen_top + line
@@ -188,7 +188,7 @@ class ConqueScreen(object):
         self.screen_top = len(self.buffer) - vim.current.window.height + 1
         if self.screen_top < 1:
             self.screen_top = 1
-        logging.debug('new screen top is  ' + str(self.screen_top))
+
 
         # align bottom of buffer to bottom of screen
         vim.command('normal ' + str(self.screen_height) + 'kG')

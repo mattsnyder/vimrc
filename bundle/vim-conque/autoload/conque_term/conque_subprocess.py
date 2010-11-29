@@ -1,11 +1,11 @@
 # FILE:     autoload/conque_term/conque_subprocess.py {{{
 # AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
 # WEBSITE:  http://conque.googlecode.com
-# MODIFIED: __MODIFIED__
-# VERSION:  __VERSION__, for Vim 7.0
+# MODIFIED: 2010-11-15
+# VERSION:  2.0, for Vim 7.0
 # LICENSE:
 # Conque - Vim terminal/console emulator
-# Copyright (C) 2009-__YEAR__ Nico Raffo
+# Copyright (C) 2009-2010 Nico Raffo
 #
 # MIT License
 #
@@ -78,9 +78,9 @@ class ConqueSubprocess:
         # try to fork a new pty
         try:
             self.pid, self.fd = pty.fork()
-            logging.info(self.pid)
+
         except:
-            logging.info("pty.fork() failed. Did you mean pty.spork() ???")
+
             return False
 
         # child proc, replace with command after altering terminal attributes
@@ -101,7 +101,7 @@ class ConqueSubprocess:
                 attrs[6][tty.VTIME] = 0
                 tty.tcsetattr(1, tty.TCSANOW, attrs)
             except:
-                logging.info('attribute setting failed')
+
                 pass
 
             # replace this process with the subprocess
@@ -149,7 +149,7 @@ class ConqueSubprocess:
             else:
                 os.write(self.fd, bytes(input, 'utf-8'))
         except:
-            logging.info('write fail')
+
             pass
         # }}}
 

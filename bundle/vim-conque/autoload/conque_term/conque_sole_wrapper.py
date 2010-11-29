@@ -1,11 +1,11 @@
 # FILE:     autoload/conque_term/conque_sole_wrapper.py {{{
 # AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
 # WEBSITE:  http://conque.googlecode.com
-# MODIFIED: __MODIFIED__
-# VERSION:  __VERSION__, for Vim 7.0
+# MODIFIED: 2010-11-15
+# VERSION:  2.0, for Vim 7.0
 # LICENSE:
 # Conque - Vim terminal/console emulator
-# Copyright (C) 2009-__YEAR__ Nico Raffo
+# Copyright (C) 2009-2010 Nico Raffo
 #
 # MIT License
 #
@@ -92,7 +92,7 @@ class ConqueSoleWrapper():
 
         # python command
         cmd_line = '%s "%s" %s %d %d %s' % (python_exe, communicator_py, self.shm_key, int(self.columns), int(self.lines), cmd)
-        logging.info('python command: ' + cmd_line)
+
 
         # console window attributes
         flags = NORMAL_PRIORITY_CLASS | DETACHED_PROCESS
@@ -103,13 +103,13 @@ class ConqueSoleWrapper():
         try:
             res = ctypes.windll.kernel32.CreateProcessW(None, u(cmd_line), None, None, 0, flags, None, u('.'), ctypes.byref(si), ctypes.byref(pi))
         except:
-            logging.info('COULD NOT START %s' % cmd_line)
+
             raise
 
         # handle
         self.pid = pi.dwProcessId
 
-        logging.info('communicator pid: ' + str(self.pid))
+
 
         # init shared memory objects
         self.init_shared_memory(self.shm_key)
@@ -124,7 +124,7 @@ class ConqueSoleWrapper():
         # emulate timeout by sleeping timeout time
         if timeout > 0:
             read_timeout = float(timeout) / 1000
-            #logging.debug("sleep " + str(read_timeout) + " seconds")
+
             time.sleep(read_timeout)
 
         output = []
@@ -147,8 +147,8 @@ class ConqueSoleWrapper():
         try:
             rescroll = self.shm_rescroll.read()
             if rescroll != '' and rescroll != None:
-                logging.debug('cmd found')
-                logging.debug(str(rescroll))
+
+
 
                 self.shm_rescroll.clear()
 
@@ -160,7 +160,7 @@ class ConqueSoleWrapper():
                 self.shm_attributes = None
 
                 # reallocate memory
-                logging.debug('new output size: ' + str(CONQUE_SOLE_BUFFER_LENGTH * self.columns * rescroll['data']['blocks']) + ' = ' + rescroll['data']['mem_key'])
+
                 self.shm_output = ConqueSoleSharedMemory(CONQUE_SOLE_BUFFER_LENGTH * self.columns * rescroll['data']['blocks'], 'output', rescroll['data']['mem_key'], True)
                 self.shm_output.create('read')
 
@@ -173,7 +173,7 @@ class ConqueSoleWrapper():
             else:
                 return False
         except:
-            logging.info(traceback.format_exc())
+
             return False
 
         return self.stats
@@ -201,12 +201,12 @@ class ConqueSoleWrapper():
 
         self.bucket += u(text, 'ascii', 'replace')
 
-        logging.debug('bucket is ' + self.bucket)
+
 
         istr = self.shm_input.read()
 
         if istr == '':
-            logging.debug('input shm is empty, writing')
+
             self.shm_input.write(self.bucket[:500])
             self.bucket = self.bucket[500:]
 
@@ -227,7 +227,7 @@ class ConqueSoleWrapper():
 
     def idle(self): # {{{
 
-        logging.info('writing idle shm')
+
         self.shm_command.write({'cmd': 'idle', 'data': {}})
 
         # }}}
