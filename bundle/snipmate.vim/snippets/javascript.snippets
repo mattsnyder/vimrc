@@ -68,7 +68,20 @@ snippet timeout
 	setTimeout(function() {${3}}${2}, ${1:10};
 # Get Elements
 snippet get
-	getElementsBy${1:TagName}('${2}')${3}
+	get ${1:function_name}() {
+		return ${2};
+	},
+snippet set
+	set ${1:function_name}(${2:value}) {
+		${3}
+	},
+snippet getset
+	get ${1:function_name}() {
+		return ${3};
+	},
+	set $1(${2:value}) {
+		${4}
+	},
 # Get Element
 snippet gett
 	getElementBy${1:Id}('${2}')${3}
